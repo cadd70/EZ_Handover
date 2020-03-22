@@ -1,12 +1,53 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+    <title>EZ Handover v0.1</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../contents/bootstrap/css/bootstrap.min.css" />
+
+    <!-- Bootstrap Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>
+      window.$ = window.jQuery = require('../contents/jquery/jquery-3.3.1.min.js')
+    </script>
+    <script src="../contents/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../contents/bootstrap/js/bootstrap.bundle.min.js"></script>
   </head>
   <body>
-    <h1>electron-boilerplate-sqlite</h1>
+
+    <div class="wrapper">
+      <div class="content-wrapper">
+        <div class="container">
+
+          <div class="content-header">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                  <h1><span class="badge badge-secondary">EZ Handover v0.1</span></h1>
+              </div>
+            </div>
+          </div>
+
+          <div class="content">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-body">
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
     <ul id="database">
     </ul>
-    <script>
+    <!-- <script>
       var sqlite3 = require('sqlite3').verbose();
       var db = new sqlite3.Database(':memory:');
 
@@ -29,6 +70,6 @@
       });
 
       db.close();
-    </script>
+    </script> -->
   </body>
 </html>
