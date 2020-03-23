@@ -48,22 +48,88 @@
                                 <div class="modal-body">
 
                                     <div class="form-group">
-                                        <label>CHB Formatado:</label>
-                                        <input type="text" name="contratoFormatado" class="form-control" id="inputChb" placeholder="00.0000.0000000-0" required>
+                                      <label>Nome do Cliente:</label>
+                                      <input type="text" name="nomeCliente" class="form-control" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-primary" onclick="_validarCHB('#inputChb');">Validar CHB</button>
+                                      <label>Contatos do Cliente:</label>
+                                      <input type="text" name="contatosCliente" class="form-control" placeholder="SSZ:john@mail.com" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Nome do Proponente:</label>
-                                        <input type="text" name="nomeProponente" class="form-control" required>
+                                      <label>Tipo de Embarque:</label>
+                                      <select name="tipoEmbarque" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Collect">Collect</option>
+                                        <option value="Prepaid">Prepaid</option>
+                                      </select>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>CPF / CNPJ:</label>
-                                        <input type="text" name="cpfCnpjProponente" class="form-control" required>
+                                      <label>Frete Negociado:</label>
+                                      <textarea rows="5" name="tipoFreteNegociado" class="form-control" ></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Cliente Aprova HBL:</label>
+                                      <select name="clienteAprovaHbl" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Envio de RI:</label>
+                                      <select name="envioRi" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                      </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                      <label>Seguro:</label>
+                                      <select name="temSeguro" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Desembaraço Ceva:</label>
+                                      <select name="desembaracoCeva" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Taxas de Destino:</label>
+                                      <textarea rows="5" name="taxasDestino" class="form-control" ></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Volume de Embarques / mês:</label>
+                                      <input type="number" name="embarquesMes" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Freetime:</label>
+                                      <input type="text" name="freetime" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Observações:</label>
+                                      <textarea rows="5" name="observacoes" class="form-control" ></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Criado Por:</label>
+                                      <input type="text" name="criadoPor" class="form-control" required>
                                     </div>
 
                                 </div>
@@ -93,7 +159,7 @@
                             <th scope="col">Cliente</th>
                             <th scope="col">Criado por</th>
                             <th scope="col">Criado em</th>
-                            <th scope="col">Editar</th>
+                            <th scope="col">Ação</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -109,6 +175,11 @@
         </div>
       </div>
     </div>
+
+    <script>
+      // You can also require other files to run in this process
+      require('./renderer.js')
+    </script>
 
   </body>
 </html>
