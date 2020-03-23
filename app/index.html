@@ -24,8 +24,58 @@
 
           <div class="content-header">
             <div class="row mb-2">
-              <div class="col-sm-6">
+              <div class="col">
                   <h1><span class="badge badge-secondary">EZ Handover v0.1</span></h1>
+              </div>
+              <div class="col d-flex align-items-center">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCadastraPerfil">
+                  <i class="fas fa-lg fa-plus"></i>
+                    Cadastrar Perfil de Cliente
+                </button>
+
+                <!-- Modal -->
+                  <div class="modal fade" id="modalCadastraPerfil" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form method='post' action='/estoque-imoveis/distrato/cadastrar-demanda' id="formmodalCadastraPerfil">
+
+                              <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Cadastrar Perfil de Cliente</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="form-group">
+                                        <label>CHB Formatado:</label>
+                                        <input type="text" name="contratoFormatado" class="form-control" id="inputChb" placeholder="00.0000.0000000-0" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary" onclick="_validarCHB('#inputChb');">Validar CHB</button>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Nome do Proponente:</label>
+                                        <input type="text" name="nomeProponente" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>CPF / CNPJ:</label>
+                                        <input type="text" name="cpfCnpjProponente" class="form-control" required>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -35,6 +85,21 @@
               <div class="col-md-12">
                 <div class="card card-primary">
                     <div class="card-body">
+
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Criado por</th>
+                            <th scope="col">Criado em</th>
+                            <th scope="col">Editar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+
                     </div>
                 </div>
               </div>
@@ -45,31 +110,5 @@
       </div>
     </div>
 
-    <ul id="database">
-    </ul>
-    <!-- <script>
-      var sqlite3 = require('sqlite3').verbose();
-      var db = new sqlite3.Database(':memory:');
-
-      db.serialize(function() {
-        db.run("CREATE TABLE lorem (info TEXT)");
-
-        var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-        for (var i = 0; i < 10; i++) {
-          stmt.run("Ipsum " + i);
-        }
-
-        stmt.finalize();
-
-        var rows = document.getElementById("database");
-        db.each("SELECT rowid AS id, info FROM lorem", function(err, row) {
-          var item = document.createElement("li");
-          item.textContent = "" + row.id + ": " + row.info;
-          rows.appendChild(item);
-        });
-      });
-
-      db.close();
-    </script> -->
   </body>
 </html>
