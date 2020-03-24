@@ -2,19 +2,29 @@
   "name": "ez_handover",
   "productName": "EZ Handover",
   "description": "Facilitar o handover de processo com perfil do cliente.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "cadd70",
-  "copyright": "",
-  "homepage": "",
-  "license": "",
   "main": "app/app.js",
   "build": {
-    "appId": "com.example.ez_handover",
-    "files": [
-      "app/**/*",
-      "node_modules/**/*",
-      "package.json"
-    ]
+    "appId": "ez_handover",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": "squirrel",
+      "icon": "icon.ico"
+    }
   },
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
