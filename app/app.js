@@ -10,6 +10,21 @@ var sqlite3 = require('sqlite3').verbose();
 
 var db = new sqlite3.Database('./database.sqlite');
 
+//***//
+const globalShortcut = electron.globalShortcut;
+//***//
+function createWindow () {
+	//***//
+	globalShortcut.register('f5', function() {
+		console.log('f5 is pressed');
+		mainWindow.reload();
+	})
+	globalShortcut.register('CommandOrControl+R', function() {
+		console.log('CommandOrControl+R is pressed');
+		mainWindow.reload();
+	})
+}
+
 // Context menu for your Electron app
 const contextMenu = require('electron-context-menu')
 
@@ -51,7 +66,7 @@ app.on('ready', function () {
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

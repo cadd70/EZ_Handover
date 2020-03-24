@@ -11,7 +11,7 @@ $("#refresh").click( function() {
 | RESETAR CAMPOS DO FORM AO FECHAR O MODAL |
 \******************************************/
 
-$(".modal").on('hidden.bs.modal', function(e){
+$(document).on('hidden.bs.modal',"div.modal",function() {
     $(this).find("form")[0].reset();
 });
 
@@ -37,8 +37,6 @@ function getFormData($form){
 function refresh() {
     $('#tabelaPerfisCadastrados').empty();
 
-    $('.modal').modal('hide');
-
     db.each("SELECT * FROM tbl_perfil_cliente", function(err, row) {
 
         let btnModalConsultar =
@@ -46,9 +44,11 @@ function refresh() {
                 `<i class="fas fa-lg fa-search"></i>` +
             `</button>` +
 
-            `<div class="modal fade" id="modalConsultaPerfil` + row.id + `" tabindex="-1" role="dialog" aria-hidden="true">` +
+            `<div class="modal fade" id="modalConsultaPerfil` + row.id + `" role="dialog" aria-hidden="true">` +
                 `<div class="modal-dialog" role="document">` +
                     `<div class="modal-content">` +
+
+                    `<form>` +
 
                         `<div class="modal-header">` +
                             `<h5 class="modal-title">Consulta de Perfil de Cliente</h5>` +
@@ -140,6 +140,8 @@ function refresh() {
                             `<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>` +
                         `</div>` +
 
+                    `</form>` +
+
                     `</div>` +
                 `</div>` +
             `</div>`
@@ -150,7 +152,7 @@ function refresh() {
                 `<i class="fas fa-lg fa-edit"></i>` +
             `</button>` +
 
-            `<div class="modal fade" id="modalAlteraPerfil` + row.id + `" tabindex="-1" role="dialog" aria-hidden="true">` +
+            `<div class="modal fade" id="modalAlteraPerfil` + row.id + `" role="dialog" aria-hidden="true">` +
                 `<div class="modal-dialog" role="document">` +
                     `<div class="modal-content">` +
 
@@ -182,8 +184,7 @@ function refresh() {
 
                             `<div class="form-group">` +
                                 `<label>Tipo de Embarque:</label>` +
-                                `<select name="tipo_embarque" class="form-control" required>` +
-                                    `<option value="" selected>Valor atual: ` + row.tipo_embarque + `</option>` +
+                                `<select name="tipo_embarque" class="form-control" value="` + row.tipo_embarque + `" required>` +
                                     `<option value="Collect">Collect</option>` +
                                     `<option value="Prepaid">Prepaid</option>` +
                                ` </select>` +
@@ -191,8 +192,7 @@ function refresh() {
 
                             `<div class="form-group">` +
                                 `<label>Frete Negociado:</label>` +
-                                `<select name="tipo_frete_negociado" class="form-control" required>` +
-                                    `<option value="" selected>Valor atual: ` + row.tipo_frete_negociado + `</option>` +
+                                `<select name="tipo_frete_negociado" class="form-control" value="` + row.tipo_frete_negociado + `" required>` +
                                     `<option value="Bid">Bid</option>` +
                                     `<option value="Cotação Spot">Cotação Spot</option>` +
                                     `<option value="Outros">Outros</option>` +
@@ -201,8 +201,7 @@ function refresh() {
 
                             `<div class="form-group">` +
                                 `<label>Cliente Aprova HBL:</label>` +
-                                `<select name="cliente_aprova_hbl" class="form-control" required>` +
-                                    `<option value="" selected>Valor atual: ` + row.cliente_aprova_hbl + `</option>` +
+                                `<select name="cliente_aprova_hbl" class="form-control" value="` + row.cliente_aprova_hbl + `" required>` +
                                     `<option value="Sim">Sim</option>` +
                                     `<option value="Não">Não</option>` +
                                 `</select>` +
@@ -210,8 +209,7 @@ function refresh() {
 
                             `<div class="form-group">` +
                                 `<label>Envio de RI:</label>` +
-                                `<select name="envio_ri" class="form-control" required>` +
-                                    `<option value="" selected>Valor atual: ` + row.envio_ri + `</option>` +
+                                `<select name="envio_ri" class="form-control" value="` + row.envio_ri + `" required>` +
                                     `<option value="Sim">Sim</option>` +
                                     `<option value="Não">Não</option>` +
                                 `</select>` +
@@ -219,8 +217,7 @@ function refresh() {
                             
                             `<div class="form-group">` +
                                 `<label>Seguro:</label>` +
-                                `<select name="tem_seguro" class="form-control" required>` +
-                                    `<option value="" selected>Valor atual: ` + row.tem_seguro + `</option>` +
+                                `<select name="tem_seguro" class="form-control" value="` + row.tem_seguro + `" required>` +
                                     `<option value="Sim">Sim</option>` +
                                     `<option value="Não">Não</option>` +
                                 `</select>` +
@@ -228,8 +225,7 @@ function refresh() {
 
                             `<div class="form-group">` +
                                 `<label>Desembaraço Ceva:</label>` +
-                                `<select name="desembaraco_ceva" class="form-control" required>` +
-                                    `<option value="" selected>Valor atual: ` + row.desembaraco_ceva + `</option>` +
+                                `<select name="desembaraco_ceva" class="form-control" value="` + row.desembaraco_ceva + `" required>` +
                                     `<option value="Sim">Sim</option>` +
                                     `<option value="Não">Não</option>` +
                                 `</select>` +
@@ -237,8 +233,7 @@ function refresh() {
 
                             `<div class="form-group">` +
                                 `<label>Taxas de Destino:</label>` +
-                                `<select name="taxas_destino" class="form-control" required>` +
-                                    `<option value="" selected>Valor atual: ` + row.taxas_destino + `</option>` +
+                                `<select name="taxas_destino" class="form-control" value="` + row.taxas_destino + `" required>` +
                                     `<option value="Bid">Bid</option>` +
                                     `<option value="Cotação Spot">Cotação Spot</option>` +
                                     `<option value="PADRÃO CEVA">PADRÃO CEVA</option>` +
@@ -257,8 +252,7 @@ function refresh() {
 
                             `<div class="form-group">` +
                                 `<label>Impressão BL:</label>` +
-                                `<select name="impressao_bl" class="form-control" required>` +
-                                    `<option value="" selected>Valor atual: ` + row.impressao_bl + `</option>` +
+                                `<select name="impressao_bl" class="form-control" value="` + row.impressao_bl + `" required>` +
                                     `<option value="Origem (entregues para exportador)">Origem (entregues para exportador)</option>` +
                                     `<option value="Destino">Destino</option>` +
                                 `</select>` +
@@ -295,7 +289,7 @@ function refresh() {
                 `<i class="fas fa-lg fa-times"></i>` +
             `</button>` +
 
-            `<div class="modal fade" id="modalExcluiPerfil` + row.id + `" tabindex="-1" role="dialog" aria-hidden="true">` +
+            `<div class="modal fade" id="modalExcluiPerfil` + row.id + `" role="dialog" aria-hidden="true">` +
                 `<div class="modal-dialog" role="document">` +
                     `<div class="modal-content">` +
 
@@ -382,7 +376,6 @@ db.run(
 \*************************************/
 
 $('#formCadastraPerfil').submit( function(e) {
-
     e.preventDefault();
 
     let data = getFormData($(this));
@@ -423,14 +416,15 @@ $('#formCadastraPerfil').submit( function(e) {
             `"` + data.criada_por + `"` +
         `);`
     ,function(er) {
-            if (er) {
-                alert('Erro ao gravar dados.<br>' + er.message);
-                // return console.log(er.message);
-            } else {
-                // console.log('Perfil gravado com sucesso!');
-                alert('Perfil gravado com sucesso!');
-                refresh();
-            }
+        if (er) {
+            return console.log(er.message);
+        } else {
+            // console.log('Perfil gravado com sucesso!');
+            $("div.modal").modal("hide");
+            $('body').removeClass('modal-open');
+            $('div.modal-backdrop').remove();
+            return refresh();
+        }
     });
      
 });
@@ -443,8 +437,6 @@ $('#formCadastraPerfil').submit( function(e) {
 $(document).on('submit','form.form-altera-perfil',function(e) {
 
     e.preventDefault();
-    
-    console.log($(this));
 
     let data = getFormData($(this));
 
@@ -469,16 +461,15 @@ $(document).on('submit','form.form-altera-perfil',function(e) {
         WHERE 
             id = ` + data.id + `;`
     ,function(er) {
-            if (er) {
-                alert('Erro ao gravar dados.<br>' + er.message);
-                // return console.log(er.message);
-            } else {
-                // console.log('Perfil alterado com sucesso!');
-                alert('Perfil alterado com sucesso!');
-                $('.modal').modal('hide');
-                $('.modal-backdrop').remove();
-                refresh();
-            }
+        if (er) {
+            return console.log(er.message);
+        } else {
+            // console.log('Perfil alterado com sucesso!');
+            $("div.modal").modal("hide");
+            $('body').removeClass('modal-open');
+            $('div.modal-backdrop').remove();
+            return refresh();
+        }
     });
 
 });
@@ -492,26 +483,21 @@ $(document).on('submit','form.form-exclui-perfil',function(e) {
 
     e.preventDefault();
 
-    // console.log($(this));
-
     let data = getFormData($(this));
-
-    // console.log(data);
 
     db.run(
         `DELETE FROM tbl_perfil_cliente
         WHERE id = ` + data.id + `;`
     ,function(er) {
-            if (er) {
-                alert('Erro ao gravar dados.<br>' + er.message);
-                // return console.log(er.message);
-            } else {
-                //  console.log('Perfil excluído com sucesso!');
-                 alert('Perfil excluído com sucesso!');
-                 $('.modal').modal('hide');
-                 $('.modal-backdrop').remove();
-                 refresh();
-            }
+        if (er) {
+            return console.log(er.message);
+        } else {
+            //  console.log('Perfil excluído com sucesso!');
+            $("div.modal").modal("hide");
+            $('body').removeClass('modal-open');
+            $('div.modal-backdrop').remove();
+            return refresh();
+        }
     });
 
 });
