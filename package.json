@@ -35,7 +35,8 @@
   },
   "dependencies": {
     "electron-context-menu": "^0.16.0",
-    "sqlite3": "^4.0.9"
+    "sqlite3": "^4.0.9",
+    "sweetalert2": "^9.10.6"
   },
   "devDependencies": {
     "electron": "^5.0.6",

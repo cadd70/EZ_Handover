@@ -1,6 +1,19 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./database.sqlite');
 
+const Swal = require('sweetalert2');
+
+/**********************\
+| Config inicial Toast |
+\**********************/
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
+
 refresh(); // Popula a tela inicialmente
 
 $("#refresh").click( function() {
@@ -417,12 +430,20 @@ $('#formCadastraPerfil').submit( function(e) {
         `);`
     ,function(er) {
         if (er) {
+            Toast.fire({
+                icon: 'error',
+                title: 'Erro: Cadastro não efetuado!'
+            });
             return console.log(er.message);
         } else {
             // console.log('Perfil gravado com sucesso!');
             $("div.modal").modal("hide");
             $('body').removeClass('modal-open');
             $('div.modal-backdrop').remove();
+            Toast.fire({
+                icon: 'success',
+                title: 'Perfil cadastrado!'
+            });            
             return refresh();
         }
     });
@@ -462,12 +483,20 @@ $(document).on('submit','form.form-altera-perfil',function(e) {
             id = ` + data.id + `;`
     ,function(er) {
         if (er) {
+            Toast.fire({
+                icon: 'error',
+                title: 'Erro: Alteração não efetuada!'
+            });
             return console.log(er.message);
         } else {
             // console.log('Perfil alterado com sucesso!');
             $("div.modal").modal("hide");
             $('body').removeClass('modal-open');
             $('div.modal-backdrop').remove();
+            Toast.fire({
+                icon: 'success',
+                title: 'Perfil alterado!'
+            });            
             return refresh();
         }
     });
@@ -490,12 +519,20 @@ $(document).on('submit','form.form-exclui-perfil',function(e) {
         WHERE id = ` + data.id + `;`
     ,function(er) {
         if (er) {
+            Toast.fire({
+                icon: 'error',
+                title: 'Erro: Exclusão não efetuada!'
+            });
             return console.log(er.message);
         } else {
             //  console.log('Perfil excluído com sucesso!');
             $("div.modal").modal("hide");
             $('body').removeClass('modal-open');
             $('div.modal-backdrop').remove();
+            Toast.fire({
+                icon: 'success',
+                title: 'Perfil excluído!'
+            });            
             return refresh();
         }
     });
