@@ -3,6 +3,10 @@ var db = new sqlite3.Database('./database.sqlite');
 
 refresh(); // Popula a tela inicialmente
 
+$("#refresh").click( function() {
+    refresh();
+});
+
 /******************************************\
 | RESETAR CAMPOS DO FORM AO FECHAR O MODAL |
 \******************************************/
@@ -116,6 +120,11 @@ function refresh() {
                             `</div>` +
 
                             `<div class="form-group">` +
+                                `<label>Impressão BL:</label>` +
+                                `<p>` + row.impressao_bl + `</p>` +                                        
+                            `</div>` +
+
+                            `<div class="form-group">` +
                                 `<label>Observações:</label>` +
                                 `<p>` + row.observacoes + `</p>` +                                        
                             `</div>` +
@@ -182,7 +191,12 @@ function refresh() {
 
                             `<div class="form-group">` +
                                 `<label>Frete Negociado:</label>` +
-                                `<textarea rows="5" name="tipo_frete_negociado" class="form-control" >` + row.tipo_frete_negociado + `</textarea>` +
+                                `<select name="tipo_frete_negociado" class="form-control" required>` +
+                                    `<option value="" selected>Valor atual: ` + row.tipo_frete_negociado + `</option>` +
+                                    `<option value="Bid">Bid</option>` +
+                                    `<option value="Cotação Spot">Cotação Spot</option>` +
+                                    `<option value="Outros">Outros</option>` +
+                                `</select>` +
                             `</div>` +
 
                             `<div class="form-group">` +
@@ -223,7 +237,12 @@ function refresh() {
 
                             `<div class="form-group">` +
                                 `<label>Taxas de Destino:</label>` +
-                                `<textarea rows="5" name="taxas_destino" class="form-control">` + row.taxas_destino + `</textarea>` +
+                                `<select name="taxas_destino" class="form-control" required>` +
+                                    `<option value="" selected>Valor atual: ` + row.taxas_destino + `</option>` +
+                                    `<option value="Bid">Bid</option>` +
+                                    `<option value="Cotação Spot">Cotação Spot</option>` +
+                                    `<option value="PADRÃO CEVA">PADRÃO CEVA</option>` +
+                                `</select>` +
                             `</div>` +
 
                             `<div class="form-group">` +
@@ -234,6 +253,15 @@ function refresh() {
                             `<div class="form-group">` +
                                 `<label>Freetime:</label>` +
                                 `<input type="text" name="freetime" class="form-control" value="` + row.freetime + `" required>` +
+                            `</div>` +
+
+                            `<div class="form-group">` +
+                                `<label>Impressão BL:</label>` +
+                                `<select name="impressao_bl" class="form-control" required>` +
+                                    `<option value="" selected>Valor atual: ` + row.impressao_bl + `</option>` +
+                                    `<option value="Origem (entregues para exportador)">Origem (entregues para exportador)</option>` +
+                                    `<option value="Destino">Destino</option>` +
+                                `</select>` +
                             `</div>` +
 
                             `<div class="form-group">` +
@@ -326,25 +354,26 @@ function refresh() {
 
 // db.run(`DROP TABLE tbl_perfil_cliente;`);
 
-// db.run(
-//     `CREATE TABLE tbl_perfil_cliente (` +
-//         `id INTEGER PRIMARY KEY AUTOINCREMENT,` +
-//         `nome_cliente TEXT NOT NULL,` +
-//         `contatos_cliente TEXT NOT NULL,` +
-//         `contatos_origem TEXT NOT NULL,` +
-//         `tipo_embarque TEXT NOT NULL,` +
-//         `tipo_frete_negociado TEXT NOT NULL,` +
-//         `cliente_aprova_hbl TEXT NOT NULL,` +
-//         `envio_ri TEXT NOT NULL,` +
-//         `tem_seguro TEXT NOT NULL,` +
-//         `taxas_destino TEXT NOT NULL,` +
-//         `desembaraco_ceva TEXT NOT NULL,` +
-//         `embarques_mes INTEGER NOT NULL,` +
-//         `freetime TEXT NOT NULL,` +
-//         `observacoes TEXT,` +
-//         `criada_por TEXT NOT NULL` +
-//     `);`
-// );
+db.run(
+    `CREATE TABLE IF NOT EXISTS tbl_perfil_cliente (` +
+        `id INTEGER PRIMARY KEY AUTOINCREMENT,` +
+        `nome_cliente TEXT NOT NULL,` +
+        `contatos_cliente TEXT NOT NULL,` +
+        `contatos_origem TEXT NOT NULL,` +
+        `tipo_embarque TEXT NOT NULL,` +
+        `tipo_frete_negociado TEXT NOT NULL,` +
+        `cliente_aprova_hbl TEXT NOT NULL,` +
+        `envio_ri TEXT NOT NULL,` +
+        `tem_seguro TEXT NOT NULL,` +
+        `taxas_destino TEXT NOT NULL,` +
+        `desembaraco_ceva TEXT NOT NULL,` +
+        `embarques_mes INTEGER NOT NULL,` +
+        `freetime TEXT NOT NULL,` +
+        `impressao_bl TEXT NOT NULL,` +
+        `observacoes TEXT,` +
+        `criada_por TEXT NOT NULL` +
+    `);`
+);
 
 // db.close();
 
@@ -372,6 +401,7 @@ $('#formCadastraPerfil').submit( function(e) {
             `desembaraco_ceva, ` +
             `embarques_mes, ` +
             `freetime, ` +
+            `impressao_bl, ` +            
             `observacoes, ` +
             `criada_por` +
         `)
@@ -388,15 +418,18 @@ $('#formCadastraPerfil').submit( function(e) {
             `"` + data.desembaraco_ceva + `", ` +
             `"` + data.embarques_mes + `", ` +
             `"` + data.freetime + `", ` +
+            `"` + data.impressao_bl + `", ` +
             `"` + data.observacoes + `", ` +
             `"` + data.criada_por + `"` +
         `);`
     ,function(er) {
             if (er) {
-                return console.log(er.message);
+                alert('Erro ao gravar dados.<br>' + er.message);
+                // return console.log(er.message);
             } else {
-            console.log(`ID ${this.lastID} gravado com sucesso!`);
-            refresh();
+                // console.log('Perfil gravado com sucesso!');
+                alert('Perfil gravado com sucesso!');
+                refresh();
             }
     });
      
@@ -406,39 +439,45 @@ $('#formCadastraPerfil').submit( function(e) {
 | UPDATE na tabela ao alterar perfil|
 \***********************************/
 
-$('.form-altera-perfil').submit( function(e) {
-
-    console.log($(this));
+// $('form.form-altera-perfil').submit( function(e) {
+$(document).on('submit','form.form-altera-perfil',function(e) {
 
     e.preventDefault();
+    
+    console.log($(this));
 
     let data = getFormData($(this));
 
     db.run(
-        `UPDATE tbl_perfil_cliente SET(` +
-            `nome_cliente = "` + data.nome_cliente + `", ` +
-            `contatos_cliente = "` + data.contatos_cliente + `", ` +
-            `contatos_origem = "` + data.contatos_origem + `", ` +
-            `tipo_embarque = "` + data.tipo_embarque + `", ` +
-            `tipo_frete_negociado = "` + data.tipo_frete_negociado + `", ` +
-            `cliente_aprova_hbl = "` + data.cliente_aprova_hbl + `", ` +
-            `envio_ri = "` + data.envio_ri + `", ` +
-            `tem_seguro = "` + data.tem_seguro + `", ` +
-            `taxas_destino = "` + data.taxas_destino + `", ` +
-            `desembaraco_ceva = "` + data.desembaraco_ceva + `", ` +
-            `embarques_mes = "` + data.embarques_mes + `", ` +
-            `freetime = "` + data.freetime + `", ` +
-            `observacoes = "` + data.observacoes + `", ` +
-            `criada_por = "` + data.criada_por + `"` +
-        `)
+        `UPDATE tbl_perfil_cliente
+        SET
+            nome_cliente = "` + data.nome_cliente + `", 
+            contatos_cliente = "` + data.contatos_cliente + `", 
+            contatos_origem = "` + data.contatos_origem + `", 
+            tipo_embarque = "` + data.tipo_embarque + `", 
+            tipo_frete_negociado = "` + data.tipo_frete_negociado + `", 
+            cliente_aprova_hbl = "` + data.cliente_aprova_hbl + `", 
+            envio_ri = "` + data.envio_ri + `", 
+            tem_seguro = "` + data.tem_seguro + `", 
+            taxas_destino = "` + data.taxas_destino + `", 
+            desembaraco_ceva = "` + data.desembaraco_ceva + `", 
+            embarques_mes = "` + data.embarques_mes + `", 
+            freetime = "` + data.freetime + `", 
+            impressao_bl = "` + data.impressao_bl + `", 
+            observacoes = "` + data.observacoes + `", 
+            criada_por = "` + data.criada_por + `"
         WHERE 
             id = ` + data.id + `;`
     ,function(er) {
             if (er) {
-                return console.log(er.message);
+                alert('Erro ao gravar dados.<br>' + er.message);
+                // return console.log(er.message);
             } else {
-            console.log(`ID ${this.lastID} gravado com sucesso!`);
-            refresh();
+                // console.log('Perfil alterado com sucesso!');
+                alert('Perfil alterado com sucesso!');
+                $('.modal').modal('hide');
+                $('.modal-backdrop').remove();
+                refresh();
             }
     });
 
@@ -448,20 +487,31 @@ $('.form-altera-perfil').submit( function(e) {
 | DELETE na tabela ao excluir perfil|
 \***********************************/
 
-$('.form-exclui-perfil').submit( function(e) {
+// $('form.form-exclui-perfil').submit( function(e) {
+$(document).on('submit','form.form-exclui-perfil',function(e) {
 
     e.preventDefault();
 
+    // console.log($(this));
+
     let data = getFormData($(this));
 
-    // db.run(
-    // ,function(er) {
-    //         if (er) {
-    //             return console.log(er.message);
-    //         } else {
-    //         console.log(`ID ${this.lastID} gravado com sucesso!`);
-    //         refresh();
-    //         }
-    // });
+    // console.log(data);
+
+    db.run(
+        `DELETE FROM tbl_perfil_cliente
+        WHERE id = ` + data.id + `;`
+    ,function(er) {
+            if (er) {
+                alert('Erro ao gravar dados.<br>' + er.message);
+                // return console.log(er.message);
+            } else {
+                //  console.log('Perfil excluído com sucesso!');
+                 alert('Perfil excluído com sucesso!');
+                 $('.modal').modal('hide');
+                 $('.modal-backdrop').remove();
+                 refresh();
+            }
+    });
 
 });

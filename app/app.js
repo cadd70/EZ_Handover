@@ -6,6 +6,10 @@ var BrowserWindow = electron.BrowserWindow;
 
 let mainWindow;
 
+var sqlite3 = require('sqlite3').verbose();
+
+var db = new sqlite3.Database('./database.sqlite');
+
 // Context menu for your Electron app
 const contextMenu = require('electron-context-menu')
 
@@ -36,8 +40,8 @@ app.on('window-all-closed', function () {
 app.on('ready', function () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 720,
     webPreferences: {
       nodeIntegration: true
     }
@@ -47,13 +51,15 @@ app.on('ready', function () {
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+    
+    db.close();
     mainWindow = null;
   });
 });
