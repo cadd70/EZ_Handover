@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+    <title>EZ Handover v0.1</title>
+
+    <link rel="stylesheet" href="../contents/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../contents/bootstrap/css/bootstrap.min.css" />
+
+    <!-- Bootstrap Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>
+      window.$ = window.jQuery = require('../contents/jquery/jquery-3.3.1.min.js')
+    </script>
+    <script src="../contents/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../contents/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+
+    <div class="wrapper">
+      <div class="content-wrapper">
+        <div class="container">
+
+          <div class="content-header">
+            <div class="row mb-2">
+              <div class="col-xs-5 m-2">
+                  <h1><span class="badge badge-secondary" style="background-color: rgb(29, 37, 70);">EZ Handover v1.0</span></h1>
+              </div>
+
+              <div class="col-xs-1 m-2 d-flex align-items-center">
+                <button type="button" class="btn btn-info" id="refresh">
+                  <i class="fas fa-lg fa-redo-alt"></i>
+                </button>
+              </div>
+
+              <div class="col-xs-4 m-2 d-flex align-items-center">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCadastraPerfil">
+                  <i class="fas fa-lg fa-plus"></i>
+                    Cadastrar Perfil de Cliente
+                </button>
+
+                <!-- Modal -->
+                  <div class="modal fade" id="modalCadastraPerfil" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form id="formCadastraPerfil">
+
+                              <div class="modal-header">
+                                    <h5 class="modal-title">Cadastrar Perfil de Cliente</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="form-group">
+                                      <label>Nome do Cliente:</label>
+                                      <input type="text" name="nome_cliente" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Contatos do Cliente:</label>
+                                      <input type="text" name="contatos_cliente" class="form-control" placeholder="SSZ:john@mail.com" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Contatos da Origem:</label>
+                                      <textarea rows="5" name="contatos_origem" class="form-control" ></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Tipo de Embarque:</label>
+                                      <select name="tipo_embarque" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Collect">Collect</option>
+                                        <option value="Prepaid">Prepaid</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Frete Negociado:</label>
+                                      <select name="tipo_frete_negociado" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Bid">Bid</option>
+                                        <option value="Cotação Spot">Cotação Spot</option>
+                                        <option value="Outros">Outros</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Cliente Aprova HBL:</label>
+                                      <select name="cliente_aprova_hbl" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Envio de RI:</label>
+                                      <select name="envio_ri" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                      </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                      <label>Seguro:</label>
+                                      <select name="tem_seguro" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Desembaraço Ceva:</label>
+                                      <select name="desembaraco_ceva" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Sim">Sim</option>
+                                        <option value="Não">Não</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Taxas de Destino:</label>
+                                      <select name="taxas_destino" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Bid">Bid</option>
+                                        <option value="Cotação Spot">Cotação Spot</option>
+                                        <option value="PADRÃO CEVA">PADRÃO CEVA</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Volume de Embarques / mês:</label>
+                                      <input type="number" name="embarques_mes" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Freetime:</label>
+                                      <input type="text" name="freetime" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Impressão BL:</label>
+                                      <select name="impressao_bl" class="form-control" required>
+                                        <option value="" selected>Selecione</option>
+                                        <option value="Origem (entregues para exportador)">Origem (entregues para exportador)</option>
+                                        <option value="Destino">Destino</option>
+                                      </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Observações:</label>
+                                      <textarea rows="5" name="observacoes" class="form-control" ></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Criado Por:</label>
+                                      <input type="text" name="criada_por" class="form-control" required>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    <button type="submit" class="btn btn-primary">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+              </div>
+
+              <div class="col-xs-2 m-2 d-flex align-items-center">
+                <div class="">
+                    <img src="../contents/logo.png" alt="Logo Ceva" style="max-height: 40px;">
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="content">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-body">
+
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Criado por</th>
+                            <th scope="col">Consultar</th>
+                            <th scope="col">Alterar</th>
+                            <th scope="col">Excluir</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tabelaPerfisCadastrados">
+                        </tbody>
+                      </table>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // You can also require other files to run in this process
+      require('./renderer.js')
+    </script>
+
+  </body>
+</html>

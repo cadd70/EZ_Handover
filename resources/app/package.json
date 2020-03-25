@@ -1,0 +1,50 @@
+{
+  "name": "ez_handover",
+  "productName": "EZ Handover",
+  "description": "Facilitar o handover de processo com perfil do cliente.",
+  "version": "1.0.0",
+  "author": "cadd70",
+  "main": "app/app.js",
+  "build": {
+    "appId": "ez_handover",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": "squirrel",
+      "icon": "icon.ico"
+    }
+  },
+  "scripts": {
+    "preinstall": "npx npm-force-resolutions",
+    "postinstall": "install-app-deps",
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "build"
+  },
+  "dependencies": {
+    "electron-context-menu": "^0.16.0",
+    "sqlite3": "^4.0.9",
+    "sweetalert2": "^9.10.6"
+  },
+  "devDependencies": {
+    "electron": "^5.0.6",
+    "electron-builder": "^21.0.15",
+    "electron-packager": "^14.2.1",
+    "minimist": "^1.2.5"
+  },
+  "resolutions": {
+    "minimist": "^1.2.5"
+  }
+}
