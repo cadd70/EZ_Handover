@@ -1,5 +1,0 @@
-*.swp
-build
-dist
-npm-debug.log
-*.sqlite
