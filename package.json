@@ -42,7 +42,7 @@
     "electron": "^5.0.6",
     "electron-builder": "^21.0.15",
     "electron-packager": "^14.2.1",
-    "minimist": "^1.2.5"
+    "minimist": "^1.2.6"
   },
   "resolutions": {
     "minimist": "^1.2.5"
